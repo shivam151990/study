@@ -184,7 +184,6 @@ Another popular setup with Redis is the main deployment with a secondary deploym
 
 There are several new things to consider in this topology since we have now entered a distributed system that has many [fallacies](https://architecturenotes.co/fallacies-of-distributed-systems/) you need to consider. Things that were previously straightforward are now more complex
 ###### Redis Replication
-
 The replication here is asynchronous. Redis replication uses a **replication ID** and an **offset** to track synchronization between a primary and its replicas. The replication ID identifies the source of data changes, while the offset counts how many commands have been processed. When a replica falls slightly behind the primary, and both share the same replication ID, the primary can send just the missing commands (partial sync) to catch up. However, if the replication IDs differ or the primary doesn't recognize the replica's offset, a full sync is required—this involves the primary sending a fresh snapshot (RDB) and buffering new changes during the transfer. Replication IDs change when a node is promoted to primary, but Redis remembers previous IDs to help replicas reconnect more efficiently. This mechanism allows Redis to avoid full syncs whenever possible by identifying common replication history and using offsets to resume from the correct point.
 
 ##### Redis Sentinel
@@ -215,7 +214,7 @@ Using Redis Sentinel in this way allows for failure detection. This detection in
 
 This setup isn't without its disadvantages so we are going to run through a few  recommendations and best practices when using Redis Sentinel.
 
-You can deploy Redis Sentinel in several ways. Honestly to make any sane recommendation I would need more context than I currently have about your system. As general guidance I would recommend running a sentinel node along aside each of your application servers (if possible) so you also don't need to factor in network reachability differences between sentinel nodes and clients who are actually using Redis.
+You can deploy Redis Sentinel in several ways. As general guidance I would recommend running a sentinel node along aside each of your application servers (if possible) so you also don't need to factor in network reachability differences between sentinel nodes and clients who are actually using Redis.
 
 You can run Sentinel alongside the Redis instances or even on independent nodes, but that complicates things in different ways. I recommend at least running three nodes with a quorum of at least two. Here is a simple chart breaking down numbers of servers in a cluster and associated quorum and tolerated failures that are sustainable.
 
@@ -242,7 +241,6 @@ Redis Cluster Architecture
 
 I am sure many have thought about what happens when you can't store all your data in memory on one machine. Currently, the maximum RAM available in a single server is 24TIB, presently listed online at AWS. Granted, that's a lot, but for some systems, that isn't enough, even for a caching layer.
 
-Redis Cluster allows for the horizontal scaling of Redis.
 >Vertical and Horizontal Scaling
 > As your systems grow, you have three options.
 > 1. Do less (No one does this entirely because we are insatiable monsters).
@@ -279,7 +277,7 @@ M2 contains hashslots from 5461 to 10922.
 
 M3 contains hashslots from 10923 to 16383.
 
-All the keys that mapped the hashslots in M1 that are now mapped to M2 would need to move. But the hashing for the individual keys to hashslots wouldn't need to move because they have already been divided up across hashslots. So this one level of misdirection solves the resharding issue with algorithmic sharding.
+All the keys that mapped the hashslots in M1 that are now mapped to M2 would need to move. But the hashing for the individual keys to hashslots wouldn't need to move because they have already been divided up across hashslots. So this one level of misdirection solves the re-sharding issue with algorithmic sharding.
 
 ###### Gossiping
 

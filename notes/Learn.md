@@ -163,3 +163,21 @@ https://www.youtube.com/watch?v=zskh3kq8xZc
   
 ► Design “Who’s Near Me” Service  
 ∟ Focus on: location sharding + frequent geo updates
+
+
+
+
+
+
+**Afternoon (3 hrs): Fleet automation**  
+5. **Device management:** NETCONF/YANG, gNMI and streaming telemetry vs. SNMP, and ZTP.  
+6. **Safe deployments:** canary, then fault domain, then region; pre- and post-checks; drain → upgrade → undrain; auto-halt and rollback.  
+7. **Access control:** TACACS+/AAA, certificate-based SSH, break-glass access, and audit logs.  
+8. **Monitoring:** interface errors, optics, BGP flaps, gray failures, and sFlow.
+
+**Evening (2 hrs): Principal-level signal**  
+9. **Practice one system design out loud:** "Safely patch 50K network devices across regions." Cover source of truth, orchestration, concurrency limits, health gates, rollback, and observability.  
+10. **Prepare 2–3 STAR stories:** an outage you handled, automation that cut toil (with numbers), and a cross-team influence example.  
+11. **Read about OCI networking:** VCN, regions, availability domains, and fault domains, enough to speak its language.
+
+**Skip for now:** deep protocol internals like OSPF/IS-IS details, QoS minutiae, and vendor CLI syntax.

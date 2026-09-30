@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Key (Technologies & Concepts)/Cassandra.md",
+                "file": "To Study.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Cassandra"
+              "title": "To Study"
             }
           }
         ]
@@ -80,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 282.5
+    "width": 239.69660568237305
   },
   "right": {
     "id": "68bf0f22ae28f91c",
@@ -173,31 +173,31 @@
   },
   "active": "df81614e58a45c92",
   "lastOpenFiles": [
-    "Key (Technologies & Concepts)/Amazon's Dynamo.md",
-    "Key (Technologies & Concepts)/Microservices.md",
-    "Key (Technologies & Concepts)/Networking.md",
-    "Key (Technologies & Concepts)/CDC.md",
     "Learn.md",
-    "To Study.md",
-    "High Level Design/Live Streaming.md",
-    "Key (Technologies & Concepts)/Geo.md",
-    "Key (Technologies & Concepts)/Elasticsearch.md",
-    "Key (Technologies & Concepts)/Back Of The envelope Estimates.md",
-    "High Level Design/Nearby Friends.md",
     "Lambda.md",
     "Interviews.md",
-    "Key (Technologies & Concepts)/DynamoDB.md",
-    "Key (Technologies & Concepts)/Redis.md",
-    "Key (Technologies & Concepts)/Cassandra.md",
-    "Key (Technologies & Concepts)/Authentication  & Authorization.md",
-    "Key (Technologies & Concepts)/Stream Processing.md",
     "Key (Technologies & Concepts)/PostgreSQL.md",
+    "Key (Technologies & Concepts)/CDC.md",
+    "Key (Technologies & Concepts)/Authentication  & Authorization.md",
+    "Key (Technologies & Concepts)/Cassandra.md",
+    "Key (Technologies & Concepts)/Networking.md",
+    "To Study.md",
+    "Key (Technologies & Concepts)/Kafka.md",
+    "High Level Design/Nearby Friends.md",
+    "Key (Technologies & Concepts)/Stream Processing.md",
+    "High Level Design/Live Streaming.md",
+    "Key (Technologies & Concepts)/Elasticsearch.md",
+    "Key (Technologies & Concepts)/Redis.md",
+    "Key (Technologies & Concepts)/Amazon's Dynamo.md",
+    "Key (Technologies & Concepts)/Back Of The envelope Estimates.md",
+    "Key (Technologies & Concepts)/Microservices.md",
+    "Key (Technologies & Concepts)/Geo.md",
+    "Key (Technologies & Concepts)/DynamoDB.md",
     "Key (Technologies & Concepts)/Object Store.md",
     "Key (Technologies & Concepts)/Mongo.md",
     "Key (Technologies & Concepts)/Database Tech Comparison.md",
     "High Level Design/Payment System.md",
     "img/livestreaming/live_streaming.png",
-    "Key (Technologies & Concepts)/Kafka.md",
     "q53o9ttjkm5j6459-e3piruhnmhf;tl'fpv bkii0hkng'd.md",
     "img/amazon_dynamodb/dynamodb-partition-key-1.gif",
     "img/amazon_dynamodb/p1.png",

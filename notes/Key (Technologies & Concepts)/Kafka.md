@@ -650,5 +650,4 @@ public class MyKafkaConsumer {
 
 
 ##### How do produce and pull requests know where (that is, which broker) to send the request?
-
 Producers and consumers send a metadata request to the brokers, including a list of topics of interest. The brokers give back a response, including partitions in the topics, replica partitions, and leader partitions. This request can be sent to any broker because they all have cached metadata. The producers and consumers sending this request also cache this metadata to avoid sending requests to the wrong brokers and direct future requests correctly.

@@ -10,10 +10,12 @@
 
 ~~Stack - 29 - 2d
 
-Linked List - 29 - 2d
+~~Linked List - 29 - 2d
 
 Sliding Window - 50 - 3d
 
 Binary Search - 50 - 3d
 
-Design DS - 26 - 3d
+String - 71 - 4d
+
+~~Design DS - 26 - 3d

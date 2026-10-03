@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "To Study.md",
+                "file": "Key (Technologies & Concepts)/PostgreSQL.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "To Study"
+              "title": "PostgreSQL"
             }
           }
         ]
@@ -173,15 +173,17 @@
   },
   "active": "df81614e58a45c92",
   "lastOpenFiles": [
+    "To Study.md",
     "Learn.md",
+    "Key (Technologies & Concepts)/Networking.md",
+    "Key (Technologies & Concepts)/Microservices.md",
+    "Key (Technologies & Concepts)/PostgreSQL.md",
+    "Key (Technologies & Concepts)/Back Of The envelope Estimates.md",
     "Lambda.md",
     "Interviews.md",
-    "Key (Technologies & Concepts)/PostgreSQL.md",
     "Key (Technologies & Concepts)/CDC.md",
     "Key (Technologies & Concepts)/Authentication  & Authorization.md",
     "Key (Technologies & Concepts)/Cassandra.md",
-    "Key (Technologies & Concepts)/Networking.md",
-    "To Study.md",
     "Key (Technologies & Concepts)/Kafka.md",
     "High Level Design/Nearby Friends.md",
     "Key (Technologies & Concepts)/Stream Processing.md",
@@ -189,8 +191,6 @@
     "Key (Technologies & Concepts)/Elasticsearch.md",
     "Key (Technologies & Concepts)/Redis.md",
     "Key (Technologies & Concepts)/Amazon's Dynamo.md",
-    "Key (Technologies & Concepts)/Back Of The envelope Estimates.md",
-    "Key (Technologies & Concepts)/Microservices.md",
     "Key (Technologies & Concepts)/Geo.md",
     "Key (Technologies & Concepts)/DynamoDB.md",
     "Key (Technologies & Concepts)/Object Store.md",

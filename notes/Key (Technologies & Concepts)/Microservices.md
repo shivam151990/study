@@ -49,6 +49,14 @@ https://www.youtube.com/watch?v=d2z78guUR4g
 - **Use Case**: Suitable for business workflows like order processing, where eventual consistency is acceptable.
 
 ### 4. **Eventual Consistency with Event Sourcing**
+Event Sourcing is a pattern where instead of storing an entity's current state directly in a database, you store the complete sequence of events that led to that state — and you derive current state by replaying those events.
+Traditional (CRUD) approach: an `Order` table has a `status` column. Update the order → you overwrite `status`, and the fact it was ever `pending` before becoming `shipped` is gone unless you separately log it.
+Event Sourcing approach: you never overwrite anything. You append immutable facts to a log:
+```
+OrderCreated{orderId=1, items=[...]}
+OrderPaid{orderId=1, amount=500}
+OrderShipped{orderId=1, carrier="X"}
+```
 
 - **How it works**:
     - Each microservice maintains its own state and publishes events to notify other services of changes.
@@ -61,7 +69,23 @@ https://www.youtube.com/watch?v=d2z78guUR4g
     - Complex to implement and manage.
 - **Use Case**: Suitable for systems where eventual consistency is acceptable, such as e-commerce platforms.
 
+**The companion pattern: CQRS**
+Event Sourcing is almost always paired with **CQRS** (Command Query Responsibility Segregation): writes append events (the source of truth), but reads go against a separate, precomputed "read model" (a regular table optimized for queries) that's kept up to date by consuming the event stream. This avoids replaying potentially thousands of events every time you just want to display an order's current status.
+
 ### 5. **Transactional Outbox Pattern**
+**The Transactional Outbox Pattern** solves a very specific, easy-to-miss problem: **you can't atomically update your database AND publish a message to a broker (like Kafka) as one operation** — they're two completely separate systems, so there's no way to wrap both in a single transaction.
+
+**The problem it solves — the "dual write" problem**
+Say an order service, on creating an order, needs to (1) save the order to its database and (2) publish an `OrderCreated` event to Kafka so other services can react. The naive code:
+
+```java
+db.save(order);              // step 1
+kafka.publish("OrderCreated", event);  // step 2
+```
+
+This is unsafe in both directions:
+- If the app crashes _after_ step 1 but _before_ step 2 — the order exists in the DB, but no event ever went out. Other services never find out.
+- If you flip the order (publish first, save second) and the DB save fails — you've told the world an order was created that doesn't actually exist.
 
 - **How it works**:
     - Each microservice writes its local transaction and the corresponding event to a local "outbox" table in the same database.
@@ -88,6 +112,13 @@ https://www.youtube.com/watch?v=d2z78guUR4g
 - **Use Case**: Suitable for systems where retries are acceptable, such as notification systems.
 
 ### 7. **Distributed Locking**
+A distributed lock is the same idea as a mutex in a single-process program — "only one actor may hold this at a time" — but enforced across multiple machines that don't share memory. Since there's no CPU-level compare-and-swap available across a network, you need an external coordinator (or protocol) everyone agrees to trust.
+
+**Why you need one**
+In a single process, threads coordinate via in-memory locks. In a distributed system, you might have:
+- Multiple instances of a service, any of which could pick up a scheduled job — you want only one to actually run it.
+- Multiple consumers racing to process the same resource (e.g., "only one worker should update inventory for SKU-123 at a time").
+- A leader-election scenario — only one node should act as the primary/leader.
 
 - **How it works**:
     - A distributed lock (e.g., using ZooKeeper or Redis) is used to ensure that only one service can modify a resource at a time.
@@ -199,13 +230,13 @@ https://www.youtube.com/watch?v=d2z78guUR4g
     **Not idempotent** — multiple identical POST requests can create multiple resources or cause side effects.
     
 - **Behavior:**
-    
     - The server **generates** the resource's unique identifier (e.g., ID).
-    - Can also be used for actions or operations that don't fit neatly into CRUD.
+    - Can also be
+
 - **Response:**
-    
     - Usually returns **201 Created** with the URL of the created resource via `Location` header.
     - May return **200 OK** or **202 Accepted** for other cases.
+
 - **Example:**  
     POST /orders with order data creates a new order.
     
@@ -219,14 +250,13 @@ https://www.youtube.com/watch?v=d2z78guUR4g
 - **Idempotency:**  
     **Idempotent** — multiple identical PUT requests produce the same result without side effects beyond the first.
     
-- **Behavior:**
-    
+- **Behavior:**    
     - The client **specifies** the resource's URL (or ID).
     - Sends the **full** resource representation.
     - If the resource exists, it **replaces** it entirely.
     - If it doesn't exist, it **creates** it (depending on API design).
+
 - **Response:**
-    
     - Typically returns **200 OK** with updated resource or **204 No Content** if no response body.
 - **Example:**  
     PUT /users/123 with user data overwrites or creates user with ID 123.
@@ -356,17 +386,14 @@ Because services live in different processes—or even data centers—the “cal
 AWS provides three types of load balancers:
 
 1. **Application Load Balancer (ALB)**:
-    
     - Operates at the **application layer (Layer 7)** of the OSI model.
     - Routes traffic based on content (e.g., URL path, hostname, HTTP headers).
     - Supports **HTTP/HTTPS** protocols.
 2. **Network Load Balancer (NLB)**:
-    
     - Operates at the **transport layer (Layer 4)** of the OSI model.
     - Routes traffic based on IP protocol data (e.g., TCP, UDP).
     - Designed for **high performance** and **low latency**.
 3. **Classic Load Balancer (CLB)**:
-    
     - Operates at both **Layer 4** and **Layer 7**.
     - Legacy load balancer, less feature-rich compared to ALB and NLB.
 

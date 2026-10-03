@@ -662,9 +662,6 @@ Client ◄── update ───────── Server
 **WebSocket:**
 Client ◄══════════════════► Server
 
-       both sides can
-       continuously send
-
 ### WebRTC
 WebRTC is designed for **real-time audio, video, and data communication**.
 
@@ -809,7 +806,7 @@ Actually **terminates and reads the HTTP request** — it can see the URL path, 
       Server → Client    Client ↔ Server    Peer ↔ Peer
 
 
-### The physical layout (where things live)
+### The physical network layout (where things live)
 
 **Region** is a city. It's a geographic area like Mumbai, Hyderabad, Frankfurt, or Ashburn, and each region runs mostly independently. If one region has a problem, others shouldn't be affected.
 

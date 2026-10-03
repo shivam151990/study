@@ -81,7 +81,7 @@ PostgreSQL is known for its rich feature set and extensibility. Here's a breakdo
     - Enables flexible deployment architectures for database availability and responsiveness under heavy loads or failures.
 
 ## Architecture
-### **Key Components of PostgreSQL Architecture**
+### Key Components of PostgreSQL Architecture
 
 1. **Client**:
     - The client is any application or program that interacts with the PostgreSQL database to retrieve or store data. Clients communicate with the PostgreSQL server using SQL commands.

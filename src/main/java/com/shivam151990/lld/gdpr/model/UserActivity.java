@@ -2,18 +2,19 @@ package com.shivam151990.lld.gdpr.model;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class UserActivity {
 
     private String userId;
-    private Activity activity;
-    private LocalDate activityDate;
+    private ActivityType activity;
+    private LocalDateTime activityTime;
 
-    public UserActivity(String userId, Activity activity, LocalDate activityDate) {
+
+    public UserActivity(String userId, ActivityType activity, LocalDateTime activityTime) {
         this.userId = userId;
         this.activity = activity;
-        this.activityDate = activityDate;
+        this.activityTime = activityTime;
     }
 }

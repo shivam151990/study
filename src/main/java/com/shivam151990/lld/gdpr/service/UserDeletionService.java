@@ -1,30 +1,38 @@
 package com.shivam151990.lld.gdpr.service;
+
+import com.shivam151990.lld.gdpr.model.User;
 import com.shivam151990.lld.gdpr.model.UserActivity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-public class UserDeletionService {
+public class UserDeletionService implements DeletionService {
 
-    private final List<Rule> rules;
+    private final List<User> users;
+    private final List<UserActivity> activities;
+    private final List<DeletionRule> rules;
 
-    public UserDeletionService(List<Rule> rules) {
+    public UserDeletionService(List<User> users, List<UserActivity> activities, List<DeletionRule> rules) {
+        this.users = users;
+        this.activities = activities;
         this.rules = rules;
     }
 
-    public Set<String> findUsersReadyForDeletion(List<UserActivity> activities) {
-        Set<String> users = new HashSet<>();
-        Map<String, List<UserActivity>> activitiesMap = new HashMap<>();
-        for (UserActivity activity: activities) {
-            activitiesMap.computeIfAbsent(activity.getUserId(), l -> new ArrayList<>()).add(activity);
-        }
-        for (Map.Entry<String, List<UserActivity>> entry: activitiesMap.entrySet()) {
-            for (Rule currentRule: rules) {
-                if (currentRule.canDelete(entry.getValue())) {
-                    users.add(entry.getKey());
-                    break;
-                }
+    @Override
+    public List<String> delete() {
+        Map<String, List<UserActivity>> activitiesByUser = activities.stream()
+                .collect(Collectors.groupingBy(UserActivity::getUserId));
+
+        List<String> usersToDelete = new ArrayList<>();
+        for (User user : users) {
+            List<UserActivity> userActivities = activitiesByUser.getOrDefault(user.getUserId(), List.of());
+            boolean canDelete = rules.stream().allMatch(rule -> rule.canDelete(userActivities));
+            if (canDelete) {
+                usersToDelete.add(user.getUserId());
             }
         }
-        return users;
+        return usersToDelete;
     }
 }

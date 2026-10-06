@@ -36,7 +36,7 @@ The Kappa Architecture is typically built around Apache Kafka® and a high-speed
 The Lambda Architecture contains both a traditional batch [data pipeline](https://hazelcast.com/glossary/data-pipeline/), a fast streaming pipeline for real-time data, and a serving layer for responding to queries.
 
 
-### ⚖️ **Stateful vs Stateless Stream Processing**
+### ⚖️ Stateful vs Stateless Stream Processing
 
 | Feature                   | Stateless Processing                            | Stateful Processing                                        |
 | ------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
@@ -205,7 +205,6 @@ A Flink cluster consists of **two main types of processes**:
 - Typically runs **one instance** per cluster (can be HA via Zookeeper or Kubernetes leader election)
 
 ### 2. TaskManagers (aka Worker Nodes)
-
 - Responsible for:
     - Executing the actual tasks (data ingestion, processing, output)
     - Each TaskManager has **slots** — one slot per parallel task

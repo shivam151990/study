@@ -4,6 +4,6 @@ import com.shivam151990.lld.gdpr.model.UserActivity;
 
 import java.util.List;
 
-public interface Rule {
-    public boolean canDelete(List<UserActivity> userActivity);
+public interface DeletionRule {
+    boolean canDelete(List<UserActivity> userActivities);
 }

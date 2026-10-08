@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9dd4fcf4bbebd834",
+        "id": "1fe19e3b320c1d15",
         "type": "tabs",
         "children": [
           {
-            "id": "df81614e58a45c92",
+            "id": "ff4c130d956892fd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Key (Technologies & Concepts)/Stream Processing.md",
+                "file": "Key (Technologies & Concepts)/Amazon's Dynamo.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Stream Processing"
+              "title": "Amazon's Dynamo"
             }
           }
         ]
@@ -171,8 +171,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "df81614e58a45c92",
+  "active": "ff4c130d956892fd",
   "lastOpenFiles": [
+    "Key (Technologies & Concepts)/DynamoDB.md",
+    "Key (Technologies & Concepts)/Amazon's Dynamo.md",
+    "Key (Technologies & Concepts)/Stream Processing.md",
     "Key (Technologies & Concepts)/PostgreSQL.md",
     "To Study.md",
     "Learn.md",
@@ -186,13 +189,10 @@
     "Key (Technologies & Concepts)/Cassandra.md",
     "Key (Technologies & Concepts)/Kafka.md",
     "High Level Design/Nearby Friends.md",
-    "Key (Technologies & Concepts)/Stream Processing.md",
     "High Level Design/Live Streaming.md",
     "Key (Technologies & Concepts)/Elasticsearch.md",
     "Key (Technologies & Concepts)/Redis.md",
-    "Key (Technologies & Concepts)/Amazon's Dynamo.md",
     "Key (Technologies & Concepts)/Geo.md",
-    "Key (Technologies & Concepts)/DynamoDB.md",
     "Key (Technologies & Concepts)/Object Store.md",
     "Key (Technologies & Concepts)/Mongo.md",
     "Key (Technologies & Concepts)/Database Tech Comparison.md",

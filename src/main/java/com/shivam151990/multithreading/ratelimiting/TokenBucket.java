@@ -18,7 +18,7 @@ public class TokenBucket {
 
     @SneakyThrows
     public synchronized void getTokens() {
-        currentTokens += (System.currentTimeMillis() - lastRequestTime) / 1000;
+        currentTokens += (int) ((System.currentTimeMillis() - lastRequestTime) / 1000);
 
         if (currentTokens > MAX_TOKENS) {
             currentTokens = MAX_TOKENS;

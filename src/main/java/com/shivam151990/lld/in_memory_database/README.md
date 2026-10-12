@@ -1,6 +1,7 @@
 In-memory SQL-like Database
-Problem Statement
-The objective is to design and implement an in-memory SQL-like database, which should support the following set of operations/functionality:
+Problem Statement:
+The objective is to design and implement an in-memory SQL-like database, 
+which should support the following set of operations/functionality:
 
 1. It should be possible to create, update or delete tables in a database.
 2. A table definition comprises columns which have types. They can also have constraints

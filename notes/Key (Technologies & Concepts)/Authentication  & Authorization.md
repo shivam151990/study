@@ -77,6 +77,7 @@ SAML (Security Assertion Markup Language)** is an **XML-based standard** for exc
 
 ##### 6. API Key Authentication
 An **API key** is a unique string of characters (a kind of secret token) that identifies and authenticates whoever is making a request to an API. It's essentially a password, but designed for programs/services to use rather than humans typing credentials into a login form.
+Keys are issued by a key-management service, stored hashed in a database with scopes and limits, cached at the gateway, and validated on every request by hashing and comparing
 
 **What it does**
 When you call an API (say, a weather service, a payment processor, or an AI model provider), the service needs to know:
@@ -85,7 +86,44 @@ When you call an API (say, a weather service, a payment processor, or an AI mode
 2. **Are they allowed to make it** (authorization)
 3. **How much have they used, and should they be rate-limited or billed** (tracking/quota)
 
-An API key handles all of this. You typically include it in your request — often as a header (`Authorization: Bearer sk-abc123...` or `X-API-Key: abc123...`) or sometimes as a query parameter — and the server checks it against its records before processing the request.
+The key is validated on the **server side**. The server keeps a record of every valid key, and each request is checked against that record. The client holds its own copy, but that copy proves nothing until the server recognizes it.
+
+**What the server stores**
+
+A table in a database or a managed key store, with one row per key:
+
+|Field|Purpose|
+|---|---|
+|`key_id` or prefix (for example `sk_live_a1b2`)|Lets the server find the row quickly|
+|`key_hash`|A hash of the key, not the key itself|
+|`owner / client_id`|Who the key belongs to|
+|`scopes / permissions`|What the key may call|
+|`rate_limit / plan`|Throttling rules|
+|`expires_at`, `revoked`, `created_at`, `last_used_at`|Lifecycle|
+
+**Why a hash and not the raw key**
+
+The key works like a password. If the database leaks and the raw keys are in it, every customer's access is exposed. So the server shows you the key **once** at creation, stores only its hash, and can never show it to you again. That is why services say "copy it now". Because API keys are long random strings, a fast hash like SHA-256 is enough. You don't need a slow password hash like bcrypt.
+
+**What happens on each request**
+
+1. The client sends the key, usually in a header: `Authorization: Bearer <key>` or `x-api-key`.
+2. The gateway or auth middleware reads the prefix or key id and hashes the incoming key.
+3. It looks up the row and compares hashes using a **constant-time comparison**, which avoids timing attacks.
+4. It checks that the key isn't revoked or expired, that the scope covers this endpoint, and that the rate limit allows it.
+5. If everything passes, the request continues. Otherwise it returns `401` for an unknown key or `403` for a known key without permission.
+
+**Where validation happens**
+
+At the edge: an API gateway (AWS API Gateway, Kong, Apigee, NGINX) or an auth middleware or filter in your own service. Hitting the database on every call is slow, so the lookup result is usually **cached** in memory or Redis for a short time, and revocation then clears the cache entry.
+
+**Where the client keeps its key**
+
+Never in source code or in a public repository. Use environment variables, or a secret manager (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault). Never put it in front-end code, because anyone can read it in the browser.
+
+**One limitation worth knowing**
+
+An API key identifies the **calling application**, not a specific user. It is easy to leak and has no built-in expiry. For user-level access and short lifetimes, OAuth 2.0 or JWT tokens are the better fit, and API keys are best for server-to-server calls.
 
 ##### 7. Client Certificate Authentication (mTLS)
 **Client Certificate Authentication**, also known as **Mutual TLS (mTLS)**, is a secure method of authenticating clients (e.g., users, devices, or applications) in a client-server communication. It is an extension of the **Transport Layer Security (TLS)** protocol, which is commonly used to encrypt HTTPS traffic. In mTLS, **both the client and the server present digital certificates** to verify their identities, ensuring a highly secure and trusted connection. Here’s a detailed explanation of Client Certificate Authentication (mTLS), how it works, and its pros and cons:

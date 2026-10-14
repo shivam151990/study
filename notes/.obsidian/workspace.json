@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Key (Technologies & Concepts)/Mongo.md",
+                "file": "Key (Technologies & Concepts)/Authentication  & Authorization.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mongo"
+              "title": "Authentication  & Authorization"
             }
           }
         ]
@@ -173,6 +173,8 @@
   },
   "active": "ff4c130d956892fd",
   "lastOpenFiles": [
+    "Key (Technologies & Concepts)/Java.md",
+    "Key (Technologies & Concepts)/Mongo.md",
     "Key (Technologies & Concepts)/DynamoDB.md",
     "Key (Technologies & Concepts)/Amazon's Dynamo.md",
     "Key (Technologies & Concepts)/Stream Processing.md",
@@ -194,7 +196,6 @@
     "Key (Technologies & Concepts)/Redis.md",
     "Key (Technologies & Concepts)/Geo.md",
     "Key (Technologies & Concepts)/Object Store.md",
-    "Key (Technologies & Concepts)/Mongo.md",
     "Key (Technologies & Concepts)/Database Tech Comparison.md",
     "High Level Design/Payment System.md",
     "img/livestreaming/live_streaming.png",
@@ -211,7 +212,6 @@
     "img/amazon_dynamodb/p3.png",
     "img/amazon_dynamodb/p2.png",
     "img/amazon_dynamodb",
-    "Dynamo.md",
     "img/elasticsearch",
     "Key Technologies/Elasticsearch",
     "img/cassandra",

@@ -39,6 +39,41 @@ Multi‑factor authentication (MFA) combines two or more factors for stronger as
 
 - **Pros & Cons**: Scalability (no server‑side session store), but tokens can’t easily be revoked and risk XSS if stored insecurely.
 
+**What a JWT contains**
+
+A JWT is three base64url parts: `header.payload.signature`.
+
+- **Header:** the algorithm and key id (`alg: RS256`, `kid: abc123`).
+- **Payload (claims):** `sub` (user id), `iss` (who issued it), `aud` (who it is for), `exp` (expiry), `iat`, and roles or scopes.
+- **Signature:** the header and payload signed with the issuer's key.
+
+The payload is only encoded, not encrypted, so anyone holding the token can read it. Never put secrets in it.
+
+**What the server stores**
+
+| Item                                                              | Where                                                                                                                               |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Signing key** (HS256 shared secret, or RS256/ES256 private key) | Auth server only, in a secret manager or KMS                                                                                        |
+| **Verification key** (the shared secret, or the public key)       | Every service that validates tokens. Public keys are usually published as a **JWKS** endpoint (`/.well-known/jwks.json`) and cached |
+| **The JWT itself**                                                | Not stored. It lives on the client                                                                                                  |
+| **Refresh tokens, revoked-token ids, user records**               | Database or Redis, only if you need logout or revocation                                                                            |
+
+**What happens on each request**
+
+1. The client sends `Authorization: Bearer <jwt>`.
+2. The gateway or service reads the header and picks the key using `kid`.
+3. It recomputes the signature and compares it to the one in the token. If it differs, the token was altered, so reject with `401`.
+4. It checks the claims: `exp` has not passed, `iss` is the expected issuer, `aud` matches this service.
+5. It reads the roles or scopes from the payload and authorizes the call.
+
+There is **no database lookup** in this flow. That is the benefit: any service can validate a token independently, which suits microservices and scaling.
+
+**Where the client keeps it**
+
+- **Browser:** an `HttpOnly`, `Secure`, `SameSite` cookie is safest against XSS. `localStorage` is easy to read from injected scripts.
+- **Mobile:** the platform secure store (Keychain or Keystore).
+- Keep the access token **short-lived** (5 to 15 minutes) and use a longer-lived refresh token to get new ones.
+
 ##### 3. OAuth 2.0 (Authorization Framework)
 **OAuth 2.0** is an **authorization framework** that allows third-party applications to access user resources (e.g., data, services) hosted on a server without exposing the user's credentials. It is widely used to enable secure and controlled access to APIs, web services, and other resources. Here’s a detailed explanation of OAuth 2.0, its components, and how it works:
 
